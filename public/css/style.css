@@ -1,0 +1,79 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul,
+li,
+ol {
+  list-style: none;
+}
+
+html,
+body {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+iframe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: auto;
+  border: none;
+  z-index: 1;
+}
+
+.box {
+  position: relative;
+  display: inline-block;
+  margin: 10px 0 0 10px;
+  padding: 15px 40px 15px 15px;
+  background: white;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.nav {
+  position: fixed;
+  z-index: 10;
+  top: 10px;
+  right: 10px;
+  text-align: right;
+}
+
+.nav-list__item {
+  line-height: 1;
+}
+
+.nav-list__item + .nav-list__item {
+  margin-top: 5px;
+} 
+
+.nav a {
+  color: white;
+  background: black;
+  transition: 0.3s;
+  font-size: 0.8em;
+}
+
+.nav a:hover {
+  opacity: 0.6;
+}
+
+#sketch {
+  opacity: 1;
+  transition: 0.3s;
+}
+
+#sketch.js-active {
+  opacity: 0;
+}

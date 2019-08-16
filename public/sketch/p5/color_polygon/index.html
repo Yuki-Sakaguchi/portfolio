@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>p5 - Color polygon.</title>
+    <style>
+      body {
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.js"></script>
+    <script>
+    const MIN = 3;
+    const MAX = 10;
+    let vertexNum = MIN;
+    let currentColorIndex = 0;
+
+    // 背景、オブジェクトカラーのRGB
+    const colorList = [
+      [ [35, 6, 81], [228, 245, 173] ],
+      [ [20, 86, 177], [229, 167, 80] ],
+      [ [112, 21, 143], [143, 230, 113] ],
+      [ [41, 25, 59], [236, 42, 76] ],
+      [ [77, 73, 66], [196, 102, 91] ],
+    ]
+
+    function setup () {
+      createCanvas(window.innerWidth, window.innerHeight);
+      noStroke();
+      shuffleColor();
+    }
+    
+    function draw () {
+      background(colorList[currentColorIndex][0][0], colorList[currentColorIndex][0][1], colorList[currentColorIndex][0][2]);
+      fill(colorList[currentColorIndex][1][0], colorList[currentColorIndex][1][1], colorList[currentColorIndex][1][2]);
+      drawPolygon(width/2, height/2, 150, vertexNum);
+    }
+
+    function drawPolygon(x, y, r, vertexNum) {
+      push();
+      translate(x, y);
+      beginShape();
+      for (let i = 0; i < vertexNum; i++) {
+        vertex(r*cos(radians(360*i/vertexNum)), r*sin(radians(360*i/vertexNum)));
+      }
+      endShape(CLOSE);
+      pop();
+    }
+
+    function windowResized () {
+      resizeCanvas(windowWidth, windowHeight);
+    }
+
+    function mousePressed () {
+      vertexNum++;
+      if (vertexNum >= MAX) {
+        vertexNum = MIN;
+        currentColorIndex++;
+        if (currentColorIndex == colorList.length) {
+          currentColorIndex = 0;
+          shuffleColor();
+        }
+      }
+    }
+
+    function shuffleColor () {
+      for (var i = colorList.length - 1; i >= 0; i--) {
+        var rand = Math.floor(Math.random() * (i + 1));
+        [colorList[i], colorList[rand]] = [colorList[rand], colorList[i]]
+      }
+    }
+    </script>
+    <script>
+      document.addEventListener('touchmove', function(e) {
+        e.preventDefault()
+      }, {passive: false})
+    </script>
+  </body>
+</html>
