@@ -1,4 +1,4 @@
-# Portforio.
+# Portfolio.
 
 # DEMO
-https://yuki-sakaguchi.github.io/portforio/public/index.html
+https://yuki-sakaguchi.github.io/portfolio/public/index.html
