@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>p5 - Color line.</title>
+    <style>
+      body {
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.js"></script>
+    <script>
+    let angle = 0.0
+    let R = 20
+    let step = 50
+
+    let lineList = []
+    let bg
+    let col
+
+    class Line {
+      constructor () {
+        this.angle = 0;
+      }
+      
+      draw () {
+        // this.angle = map(dist(this.x, this.y, mouseX, mouseY), 0, width, -10, 1.55);
+        // angle = map(dist(x, 0, mouseX, 0), 0, width, 1.55, 3.1);
+        this.angle = map(dist(this.x, 0, mouseX, 0), 0, width, 0, 5);
+        push();
+        translate(this.x, this.y);
+        stroke(this.col);
+        rotate(this.rotate);
+        let len = cos(this.angle) * R;
+        line(0, -len, 0, len);
+        pop();
+      }
+    }
+
+    function setup () {
+      createCanvas(window.innerWidth, window.innerHeight);
+
+      bg = color(4, 16, 38)
+      col = [
+        color(255, 195, 1),
+        color(248, 234, 223),
+        color(46, 129, 135),
+        color(164, 7, 96),
+        color(55, 218, 213),
+        color(227, 1, 109)
+      ]
+
+      background(bg)
+      strokeWeight(6)
+  
+      for (let y = 0; y < height; y += step) {
+        for (let x = 0; x < width; x += step) {
+          const l = new Line();
+          l.x = x;
+          l.y = y;
+          l.rotate = 0.8;
+          l.angle = 1.55;
+          l.col = col[parseInt(random(col.length))];
+          lineList.push(l);
+        } 
+      }
+    }
+    
+    function draw () {
+      background(bg);
+      for (let i = 0; i < lineList.length; i++) {
+        lineList[i].draw();
+      }
+    }
+
+    function windowResized () {
+      resizeCanvas(windowWidth, windowHeight);
+    }
+    </script>
+    <script>
+      document.addEventListener('touchmove', function(e) {
+        e.preventDefault()
+      }, {passive: false})
+    </script>
+  </body>
+</html>
