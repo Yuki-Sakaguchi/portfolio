@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>p5 - Color dot.</title>
+    <style>
+      body {
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+    <script>
+      let step = 50
+      let radius = 10
+
+      const list = []
+
+      /**
+      * 描画開始前に１度だけ動く処理
+      */
+      function setup () {
+        createCanvas(window.innerWidth, window.innerHeight)
+        colorMode(HSB, 360, 100, 100)
+        background(0)
+        noStroke()
+
+        for (let y = -radius, i = 0; y < height; y += step, i++) {
+          for (let x = -radius; x < width; x += step) {
+            list.push({
+              x: i % 2 == 0 ? x : x - (step/2),
+              y,
+              color: color(random(360), 60, 80)
+            })
+          }
+        }
+      }
+
+      /**
+      * 1秒間に60回（frameRate関数で指定可能）実行される処理
+      */
+      function draw () {
+        background(0)
+        for (let i = 0; i < list.length; i++) {
+          let target = list[i]
+          let d = dist(target.x, target.y, mouseX, mouseY)
+          let r = 1;
+          if (d < width/5) {
+            r = map(d, 100, width/3, 4.5, 1)
+          }
+          fill(target.color)
+          ellipse(target.x, target.y, radius * r, radius * r)
+        }
+      }
+
+      /**
+      * リサイズ時に動く処理
+      */
+      function windowResized () {
+        resizeCanvas(windowWidth, windowHeight)
+      }
+    </script>
+    <script>
+      document.addEventListener('touchmove', function(e) {
+        e.preventDefault()
+      }, {passive: false})
+    </script>
+  </body>
+</html>
