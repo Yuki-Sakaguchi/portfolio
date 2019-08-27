@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>p5 - Pixel random.</title>
+    <style>
+      body {
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.js"></script>
+    <script>
+      let pixel;
+
+      class Pixel {
+        constructor () {
+          this.x = 0;
+          this.y = 0;
+          this.friction = 0.99;
+          this.tx = 0;
+          this.ty = 0;
+        }
+
+        draw () {
+          noStroke();
+          stroke(255);
+          line(this.x, this.y, this.px, this.py);
+          this.px = this.x;
+          this.py = this.y;
+        }
+
+        update () {
+          if (random(1) < 0.1) {
+            this.friction = random(0, 0.1);
+            this.tx = random(width);
+            this.ty = random(height);
+          }
+          
+          this.x += (this.tx - this.x) * this.friction + random(-5, 5);
+          this.y += (this.ty - this.y) * this.friction + random(-5, 5);
+        }
+
+        constraint () {
+          if (this.x < 0) {
+            this.x = 0;
+            this.vx = Math.abs(this.vx);
+          } else if (this.x > width) {
+            this.x = width;
+            this.vx = -Math.abs(this.vx);
+          }
+          if (this.y < 0) {
+            this.y = 0;
+            this.vy = Math.abs(this.vy);
+          } else if (this.y > height) {
+            this.y = height;
+            this.vy = -Math.abs(this.vy);
+          }
+        }
+      }
+
+
+      /**
+      * 描画開始前に１度だけ動く処理
+      */
+      function setup () {
+        createCanvas(window.innerWidth, window.innerHeight)
+        background(0)
+        noStroke()
+        noSmooth()
+        pixel = new Pixel();
+        pixel.x = pixel.px = width/2;
+        pixel.y = pixel.py = height/2;
+      }
+
+      /**
+      * 1秒間に60回（frameRate関数で指定可能）実行される処理
+      */
+      function draw () {
+        fill(0, 0, 0, 20)
+        rect(0, 0, width, height)
+        pixel.update();
+        pixel.constraint();
+        pixel.draw();
+      }
+
+      /**
+      * リサイズ時に動く処理
+      */
+      function windowResized () {
+        resizeCanvas(windowWidth, windowHeight)
+      }
+
+    </script>
+    <script>
+      document.addEventListener('touchmove', function(e) {
+        e.preventDefault()
+      }, {passive: false})
+    </script>
+  </body>
+</html>
