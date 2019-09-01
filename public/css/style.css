@@ -69,11 +69,13 @@ iframe {
   opacity: 0.6;
 }
 
-#sketch {
-  opacity: 1;
-  transition: 0.3s;
-}
-
-#sketch.js-active {
-  opacity: 0;
+#frame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: auto;
+  border: none;
+  z-index: 1;
 }
