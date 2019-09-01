@@ -65,6 +65,12 @@ iframe {
   font-size: 0.8em;
 }
 
+.nav a.js-active {
+  color: black;
+  background: white;
+  pointer-events: none;
+}
+
 .nav a:hover {
   opacity: 0.6;
 }
